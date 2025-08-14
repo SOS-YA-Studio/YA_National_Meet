@@ -76,7 +76,7 @@
       position: relative;
       max-width: 800px;
       margin: 20px auto;
-      min-height: 300px; /* Keeps layout steady */
+      min-height: 300px;
     }
     .tab-content {
       position: absolute;
@@ -122,19 +122,30 @@
     <p class="welcome">welcomes you to</p>
     <h1 class="title">✨ Young Adults National Meet 2025 ✨</h1>
     <p class="tagline">A journey within - guided by His grace. 
-Together we rise, a new era to embrace. </p>
-    <p class="date">🗓️ <strong>Date:</strong> 16th &amp; 17th Aug 2025</p>
-    <p class="location">📍 <strong>Location:</strong> Darshan Meditation Hall, Kirpal Ashram, Delhi</p>
+    Together we rise, a new era to embrace. </p>
+    <p class="date">🗓️ <strong>Date:</strong> <span id="event-date"></span></p>
+    <p class="location">📍 <strong>Location:</strong> <span id="event-location"></span></p>
   </header>
 
   <!-- Tabs -->
   <div class="tabs">
-    <button class="tab-btn active" data-tab="day1">16 August</button>
-    <button class="tab-btn" data-tab="day2">17 August</button>
+    <button class="tab-btn active" 
+      data-tab="day1" 
+      data-date="16th August 2025" 
+      data-location="Darshan Meditation Hall, Kirpal Ashram, Delhi">
+      16 August
+    </button>
+    <button class="tab-btn" 
+      data-tab="day2" 
+      data-date="17th August 2025" 
+      data-location="Sant Darshan Singh Ji Dham, Burari, Delhi">
+      17 August
+    </button>
   </div>
 
   <!-- Tab Container -->
   <div class="tab-container">
+    <!-- Day 1 Content -->
     <div id="day1" class="tab-content active">
       <h2>National Meet Program Sheet - 16 August</h2>
       <table>
@@ -151,7 +162,7 @@ Together we rise, a new era to embrace. </p>
         <tr><td>11</td><td>12.40 PM - 12.45 PM</td><td>Zone Presentation</td></tr>
         <tr><td>12</td><td>12.45 PM - 1.00 PM</td><td>Motivational Talk - How to represent mission - Surinder Singh</td></tr>
         <tr><td>13</td><td>1.00 PM - 2.00 PM</td><td>Lunch</td></tr>
-        <tr><td>14</td><td>2.00 PM - 2.15 PM</td><td>BDC and Organ Donation Promotion</td></tr
+        <tr><td>14</td><td>2.00 PM - 2.15 PM</td><td>BDC and Organ Donation Promotion</td></tr>
         <tr><td>15</td><td>2.15 PM - 2.30 PM</td><td>Rooh ki Pukar Promotion</td></tr>
         <tr><td>16</td><td>2.30 PM - 4.30 PM</td><td>Cultural Program from Zones</td></tr>
         <tr><td>17</td><td>4.30 PM - 5.30 PM</td><td>Veggie Fest</td></tr>
@@ -167,6 +178,7 @@ Together we rise, a new era to embrace. </p>
       </table>
     </div>
 
+    <!-- Day 2 Content -->
     <div id="day2" class="tab-content">
       <h2>National Meet Program Sheet - 17 August</h2>
       <table>
@@ -184,11 +196,23 @@ Together we rise, a new era to embrace. </p>
     </div>
   </div>
 
-  <!-- JS for Tabs -->
+  <!-- JS for Tabs & Dynamic Header -->
   <script>
     const tabs = document.querySelectorAll('.tab-btn');
     const panels = document.querySelectorAll('.tab-content');
+    const dateEl = document.getElementById('event-date');
+    const locationEl = document.getElementById('event-location');
 
+    function updateHeaderFromTab(tab) {
+      dateEl.textContent = tab.dataset.date;
+      locationEl.textContent = tab.dataset.location;
+    }
+
+    // Initialize with active tab
+    const activeTab = document.querySelector('.tab-btn.active');
+    updateHeaderFromTab(activeTab);
+
+    // Tab click handler
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(b => b.classList.remove('active'));
@@ -196,6 +220,8 @@ Together we rise, a new era to embrace. </p>
 
         tab.classList.add('active');
         document.getElementById(tab.dataset.tab).classList.add('active');
+
+        updateHeaderFromTab(tab);
       });
     });
   </script>
